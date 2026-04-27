@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "https://impact-grid-frontend.vercel.app/",
+  origin: "https://impact-grid-frontend-pc35fhuj9-priya-singhs-projects-ab4f043a.vercel.app/",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
