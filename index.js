@@ -10,11 +10,26 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:8080"
+];
+
+// ✅ This regex allows ALL your Vercel preview + production URLs automatically
+const vercelPreview = /^https:\/\/.*\.vercel\.app$/;
+app.options("*", cors());
 app.use(cors({
-  origin: "https://impact-grid-frontend-pc35fhuj9-priya-singhs-projects-ab4f043a.vercel.app/",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked: ${origin}`));
+    }
+  },
+  credentials: true,
 }));
+
+// ✅ Also handle preflight requests explicitly
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
